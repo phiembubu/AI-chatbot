@@ -4,6 +4,7 @@ Triển khai ở nền tản web và mobile.**
 <img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/e50fe99e-e0a3-49ba-9eac-1c7a6228928d" />
 
 **Triển khai:**
+
 Chunking (Chia nhỏ văn bản)
 Mục đích
 Không nhét cả file lớn vào model. Giúp tìm kiếm chính xác hơn. Tăng khả năng match với query
