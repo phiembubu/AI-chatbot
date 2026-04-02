@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolHub | Q&A System</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Auth Logic -->
+    <script src="auth.js"></script>
+    <script>
+        // Protect Route: Ensure user is logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            Auth.requireLogin();
+        });
+    </script>
+</head>
+
+<body>
+    <div class="app-container glass-effect">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fa-solid fa-graduation-cap"></i> SchoolHub</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item active">
+                    <i class="fa-solid fa-message"></i> Q&A Assistant
+                </a>
+                <a href="admin.html" class="nav-item">
+                    <i class="fa-solid fa-shield-halved"></i> Admin Dashboard
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class="fa-solid fa-moon"></i> Dark Mode
+                </div>
+                <div class="logout-btn" onclick="Auth.logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <header class="chat-header">
+                <div class="header-info">
+                    <h1>Trợ lý trường học</h1>
+                    <p>Hỏi về Ký túc xá, Miễn giảm học phí, Lệ phí gửi xe, và ....</p>
+                </div>
+                <div class="header-status">
+                    <span class="status-indicator"></span> Online
+                </div>
+            </header>
+
+            <div class="chat-history" id="chat-history">
+                <!-- Welcome Message -->
+                <div class="message bot-message fade-in">
+                    <div class="message-avatar">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p>Xin chào! Tôi là Trợ lý Trường học. Tôi có thể giúp bạn trả lời các câu hỏi về quy định,
+                                thủ tục, chính sách của trường. Bạn cần hỗ trợ về vấn đề gì?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Input Box -->
+            <div class="chat-input-container fade-in-up">
+                <div class="input-wrapper">
+                    <textarea id="chat-input" placeholder="Ask your question here..." rows="1" autofocus></textarea>
+                    <button id="send-btn" class="send-btn" title="Send message">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <p>AI có thể mắc lỗi. Hãy xác minh thông tin quan trọng với văn phòng quản trị.</p>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

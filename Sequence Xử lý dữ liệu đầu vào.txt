@@ -1,0 +1,8 @@
+title This is a title
+
+participant Tài Liệu
+    participant Chunking
+    participant ChromaDB
+Tài Liệu->Chunking:chunk_text(text)
+Tài Liệu<--Chunking:chunks = chunk_text(text)
+Tài Liệu->ChromaDB:collection.add

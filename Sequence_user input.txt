@@ -1,0 +1,45 @@
+title Sequence diagram user input
+
+
+
+    autonumber
+    actor User as Người dùng
+    participant Main as Main Loop (Script)
+    participant Gemini as Gemini Model (LLM)
+    participant Chroma as ChromaDB (Vector DB)
+    participant Filter as keyword_filter()
+    participant Reranker as CrossEncoder (Reranker)
+    
+
+User as Người dùng->Main as Main Loop (Script):nhập câu hỏi\n
+Main as Main Loop (Script)->Main as Main Loop (Script):Format history
+Main as Main Loop (Script)->Gemini as Gemini Model (LLM):rewrite(user_input, chat_user) \n
+Main as Main Loop (Script)<--Gemini as Gemini Model (LLM):search_query = rewrite(user_input, chat_user)
+User as Người dùng<--Main as Main Loop (Script):print(f"\nCâu hỏi đã được viết lại: {search_query}")
+Main as Main Loop (Script)->Chroma as ChromaDB (Vector DB):search(search_query, top_k=20)
+
+
+Main as Main Loop (Script)<--Chroma as ChromaDB (Vector DB):inforaw_contexts = search(search_query, top_k=20)
+
+
+
+
+
+
+
+
+
+
+
+
+deactivate Chroma as ChromaDB (Vector DB)
+Main as Main Loop (Script)->Filter as keyword_filter(): keyword_filter(raw_contexts, search_query)
+Main as Main Loop (Script)<--Filter as keyword_filter():raw_contexts = keyword_filter(raw_contexts, search_query)
+Main as Main Loop (Script)->Reranker as CrossEncoder (Reranker): rerank(search_query, raw_contexts, top_k=10)
+Main as Main Loop (Script)<-- Reranker as CrossEncoder (Reranker):filtered_contexts = rerank(search_query, raw_contexts, top_k=10)
+Main as Main Loop (Script)->Main as Main Loop (Script):build_prompt(filtered_contexts, user_input, chat_history) 
+Main as Main Loop (Script)->Gemini as Gemini Model (LLM):generate_content
+Main as Main Loop (Script)<--Gemini as Gemini Model (LLM):response.text
+User as Người dùng<--Main as Main Loop (Script):Câu trả lời
+Main as Main Loop (Script)->Main as Main Loop (Script):chat_history.append\nchat_user.append
+Main as Main Loop (Script)->Main as Main Loop (Script):Bỏ bớt 1 tin nhắn đầu khi vượt quá 4 tin nhắn

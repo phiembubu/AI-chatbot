@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | SchoolHub</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Auth Logic -->
+    <script src="auth.js"></script>
+    <script>
+        // Protect Route: Ensure user is Admin
+        document.addEventListener('DOMContentLoaded', () => {
+            Auth.requireAdmin();
+        });
+    </script>
+</head>
+
+<body>
+    <div class="app-container glass-effect">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fa-solid fa-graduation-cap"></i> SchoolHub</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fa-solid fa-message"></i> Q&A Assistant
+                </a>
+                <a href="admin.html" class="nav-item active">
+                    <i class="fa-solid fa-shield-halved"></i> Admin Dashboard
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Knowledge Base Management</p>
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class="fa-solid fa-moon"></i> Dark Mode
+                </div>
+                <div class="logout-btn" onclick="Auth.logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Admin Area -->
+        <main class="admin-area">
+            <header class="chat-header">
+                <div class="header-info">
+                    <h1>Document Verification & Uploads</h1>
+                    <p>Upload text files (.txt) to train the RAG knowledge base dynamically.</p>
+                </div>
+                <div class="header-status admin-status">
+                    <i class="fa-solid fa-database"></i> Vector DB Active
+                </div>
+            </header>
+
+            <div class="upload-container fade-in-up">
+
+                <div class="upload-card">
+                    <h2><i class="fa-solid fa-cloud-arrow-up"></i> Upload Documents</h2>
+                    <p class="subtitle">Only `.txt` files containing up-to-date school regulations are accepted.</p>
+
+                    <div class="drop-zone" id="drop-zone">
+                        <i class="fa-solid fa-file-lines fa-3x bounce"></i>
+                        <span class="drop-zone-text">Drag & Drop files here or click to select</span>
+                        <input type="file" id="file-input" accept=".txt" multiple hidden>
+                    </div>
+
+                    <button id="upload-btn" class="primary-btn" disabled>
+                        Upload to ChromaDB <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </button>
+
+                    <div class="upload-progress-container hidden" id="upload-progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span class="progress-text" id="progress-text">Processing...</span>
+                    </div>
+
+                </div>
+
+                <div class="documents-list-card">
+                    <h2><i class="fa-solid fa-list-check"></i> Latest RAG Ingestions</h2>
+                    <ul class="doc-list" id="doc-list">
+                        <!-- Items appended dynamically via JS -->
+                        <li class="empty-state">
+                            <i class="fa-solid fa-folder-open"></i>
+                            No documents uploaded in this session.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
